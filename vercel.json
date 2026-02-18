@@ -1,1 +1,1 @@
-{\n  "build": {\n    "env": {\n      "NODE_ENV": "production"\n    },\n    "commands": {\n      "install": "npm install",\n      "build": "npm run build"\n    },\n    "outputDirectory": "dist"\n  }\n}
+{\n  \"version\": 2,\n  \"builds\": [\n    {\n      \"src\": \.\/index.html,\n      \"use\": \.\/node_modules\/vite\/dist\/vite.js\n    }\n  ],\n  \"routes\": [\n    {\n      \"src\": \.\/\*,\n      \"dest\": \.\/index.html\n    }\n  ]\n}
