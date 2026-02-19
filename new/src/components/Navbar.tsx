@@ -1,3 +1,4 @@
+
 import { MessageSquare, User, MapPin, Search, Calendar, Menu, X, LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,32 +21,22 @@ export default function Navbar() {
         </div>
 
         <div className="nav-right desktop-only">
-          <button className="nav-link">
-            <MapPin size={16} /> Location
-          </button>
+          <button className="nav-link"><MapPin size={16} /> Location</button>
           <Link to="/find-events" className="nav-link">Find Events</Link>
           <Link to="/create-event" className="nav-link">Create Event</Link>
           <Link to="/tickets" className="nav-link">Find My Tickets</Link>
-          <Link to="/login" className="nav-link">
-            <LogIn size={16} /> Log In
-          </Link>
+          <Link to="/login" className="nav-link"><LogIn size={16} /> Log In</Link>
           <Link to="/signup" className="nav-link btn-signup">Sign Up</Link>
         </div>
 
         <div className="mobile-only">
-          <button
-            className="icon-btn"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X color="var(--primary-color)" />
-            ) : (
-              <Menu color="var(--primary-color)" />
-            )}
+          <button className="icon-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X color="var(--primary-color)" /> : <Menu color="var(--primary-color)" />}
           </button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="mobile-menu">
           <Link to="/find-events" className="mobile-link">Find Events</Link>
@@ -55,6 +46,7 @@ export default function Navbar() {
         </div>
       )}
 
+      {/* Category Strip */}
       <div className="category-strip">
         <div className="container">
           <Link to="/category/wedding" className="category-item">Wedding</Link>
@@ -66,18 +58,18 @@ export default function Navbar() {
 
       <style>{`
         .navbar {
-          background: var(--background-white);
+          background: var(--background-white); /* Clean white */
           border-bottom: 1px solid var(--border-color);
           position: sticky;
           top: 0;
           z-index: 100;
-          box-shadow: var(--shadow-sm);
+          box-shadow: var(--shadow-sm); /* Subtle depth */
         }
         .nav-container {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 80px;
+          height: 80px; /* Slightly taller for luxury feel */
         }
         .nav-left {
           display: flex;
@@ -86,7 +78,7 @@ export default function Navbar() {
           flex: 1;
         }
         .logo {
-          font-family: var(--font-family-serif);
+          font-family: var(--font-family-serif); /* Serif Logo */
           font-size: 1.75rem;
           font-weight: 700;
           color: var(--primary-color);
@@ -96,7 +88,7 @@ export default function Navbar() {
         .search-bar {
           background: var(--background-light);
           border: 1px solid var(--border-color);
-          border-radius: 4px;
+          border-radius: 4px; /* More structured, less round */
           padding: 0.6rem 1rem;
           display: flex;
           align-items: center;
@@ -117,7 +109,7 @@ export default function Navbar() {
           color: var(--text-primary);
         }
         .search-icon { color: var(--text-secondary); }
-
+        
         .nav-right {
           display: flex;
           align-items: center;
@@ -140,20 +132,20 @@ export default function Navbar() {
           color: var(--primary-color);
         }
         .btn-signup {
-          color: var(--primary-color);
-          font-weight: 600;
+            color: var(--primary-color);
+            font-weight: 600;
         }
-
+        
         .category-strip {
           border-top: 1px solid var(--border-color);
-          background: white;
+          background: white; /* Keep strip clean */
           padding: 1rem 0;
           overflow-x: auto;
         }
         .category-strip .container {
           display: flex;
-          gap: 3rem;
-          justify-content: center;
+          gap: 3rem; /* More spacing */
+          justify-content: center; /* Center categories */
         }
         .category-item {
           font-weight: 500;
@@ -165,32 +157,29 @@ export default function Navbar() {
           position: relative;
         }
         .category-item:after {
-          content: '';
-          position: absolute;
-          width: 0;
-          height: 2px;
-          bottom: -4px;
-          left: 0;
-          background-color: var(--primary-color);
-          transition: width 0.3s;
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
         }
         .category-item:hover {
           color: var(--primary-color);
         }
         .category-item:hover:after {
-          width: 100%;
+            width: 100%;
         }
 
         .mobile-only { display: none; }
-
+        
         @media (max-width: 768px) {
           .desktop-only { display: none; }
           .mobile-only { display: block; }
           .search-bar { display: none; }
-          .category-strip .container {
-            justify-content: flex-start;
-            gap: 2rem;
-          }
+          .category-strip .container { justify-content: flex-start; gap: 2rem; }
           .mobile-menu {
             position: absolute;
             top: 80px;
@@ -205,69 +194,12 @@ export default function Navbar() {
             box-shadow: var(--shadow-lg);
           }
           .icon-btn {
-            background: none;
-            border: none;
-            padding: 0.5rem;
+              background: none;
+              border: none;
+              padding: 0.5rem;
           }
         }
       `}</style>
     </nav>
   );
 }
-
-
-// import { Link } from "react-router-dom";
-// import { useAuthStore } from "../store/useAuthStore";
-// import { LogOut, MessageSquare, Settings, User } from "lucide-react";
-
-// const Navbar = () => {
-//   const { logout, authUser } = useAuthStore();
-
-//   return (
-//     <header
-//       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
-//     backdrop-blur-lg"
-//     >
-//       <div className="container mx-auto px-4 h-16">
-//         <div className="flex items-center justify-between h-full">
-//           <div className="flex items-center gap-8">
-//             <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-all">
-//               <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-//                 <MessageSquare className="w-5 h-5 text-primary" />
-//               </div>
-//               <h1 className="text-lg font-bold">Chatty</h1>
-//             </Link>
-//           </div>
-
-//           <div className="flex items-center gap-2">
-//             <Link
-//               to={"/settings"}
-//               className={`
-//               btn btn-sm gap-2 transition-colors
-              
-//               `}
-//             >
-//               <Settings className="w-4 h-4" />
-//               <span className="hidden sm:inline">Settings</span>
-//             </Link>
-
-//             {authUser && (
-//               <>
-//                 <Link to={"/profile"} className={`btn btn-sm gap-2`}>
-//                   <User className="size-5" />
-//                   <span className="hidden sm:inline">Profile</span>
-//                 </Link>
-
-//                 <button className="flex gap-2 items-center" onClick={logout}>
-//                   <LogOut className="size-5" />
-//                   <span className="hidden sm:inline">Logout</span>
-//                 </button>
-//               </>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
-// export default Navbar;
