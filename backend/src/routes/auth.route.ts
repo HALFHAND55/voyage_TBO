@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { signup, login, logout, checkAuth } from "../controllers/auth.controller";
-import { vendorLogin, vendorLogout, vendorCheckAuth } from "../controllers/vendorAuth.controller";
-import { protectRoute } from "../middleware/auth.middleware";
-import { protectVendor } from "../middleware/vendorAuth.middleware";
+import { signup, login, logout, checkAuth } from "../controllers/auth.controller.js";
+import { vendorLogin, vendorLogout, vendorCheckAuth } from "../controllers/vendorAuth.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
+import { protectVendor } from "../middleware/vendorAuth.middleware.js";
 
 const router = Router();
 

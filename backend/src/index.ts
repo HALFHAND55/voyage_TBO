@@ -6,9 +6,14 @@ import cors from "cors";
 import path from "path";
 import http from "http";
 
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 //import { initSocket } from "./lib/socket";
 
-import authRoutes from "./routes/auth.route";
+import authRoutes from "./routes/auth.route.js";
 
 dotenv.config();
 
@@ -16,7 +21,6 @@ const app = express();
 const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
-const __dirname = path.resolve();
 
 app.get("/", (_req, res) => {
   res.status(200).json({ status: "API running" });
