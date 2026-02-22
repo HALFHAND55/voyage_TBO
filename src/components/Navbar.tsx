@@ -56,18 +56,18 @@ export default function Navbar() {
 
       <style>{`
         .navbar {
-          background: #181818;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: var(--background-white); /* Now pulls #1A1A1D from index.css */
+          border-bottom: 1px solid var(--border-color);
           position: sticky;
           top: 0;
           z-index: 100;
-          box-shadow: 0 2px 20px rgba(0,0,0,0.55);
+          box-shadow: var(--shadow-sm);
         }
         .nav-container {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 72px;
+          height: 80px;
         }
         .nav-left {
           display: flex;
@@ -77,7 +77,7 @@ export default function Navbar() {
         }
         .logo {
           font-family: var(--font-family-serif);
-          font-size: 1.65rem;
+          font-size: 1.75rem;
           font-weight: 700;
           color: var(--primary-color);
           letter-spacing: -0.5px;
@@ -85,10 +85,10 @@ export default function Navbar() {
           text-decoration: none;
         }
         .search-bar {
-          background: #1A1A1A;
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 8px;
-          padding: 0.55rem 1rem;
+          background: var(--background-light); /* Now pulls #121212 */
+          border: 1px solid var(--border-color);
+          border-radius: 4px;
+          padding: 0.6rem 1rem;
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -153,9 +153,9 @@ export default function Navbar() {
         }
 
         .category-strip {
-          border-top: 1px solid rgba(255,255,255,0.05);
-          background: #141414;
-          padding: 0.85rem 0;
+          border-top: 1px solid var(--border-color);
+          background: var(--background-white); /* Changed from 'white' to dark variable */
+          padding: 1rem 0;
           overflow-x: auto;
           scrollbar-width: none;
         }
@@ -206,9 +206,9 @@ export default function Navbar() {
             top: 64px;
             left: 0;
             width: 100%;
-            background: #181818;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 1.25rem 1.5rem;
+            background: var(--background-white); /* Dark background for mobile */
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
@@ -223,11 +223,11 @@ export default function Navbar() {
             padding-bottom: 0.65rem;
             border-bottom: 1px solid rgba(255,255,255,0.05);
           }
-          .mobile-link:hover { color: var(--primary-color); }
-          .mobile-link:last-child { border-bottom: none; }
-          @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to   { opacity: 1; transform: translateY(0); }
+          .mobile-link { color: var(--text-primary); }
+          .icon-btn {
+              background: none;
+              border: none;
+              padding: 0.5rem;
           }
         }
       `}</style>

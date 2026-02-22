@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Landing.css';
 
@@ -139,76 +138,22 @@ function StatCard({ end, suffix, label, active }: { end: number; suffix: string;
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 const Landing = () => {
-    // Planner selections
-    const [planner, setPlanner] = useState<PlannerState>({ type: '', budget: '', location: '' });
-
-    // Stats counter activation
-    const statsRef = useRef<HTMLDivElement>(null);
-    const [statsActive, setStatsActive] = useState(false);
-
-    // Section refs for scroll reveal
-    const plannerRef = useRef<HTMLDivElement>(null);
-    const experienceRef = useRef<HTMLDivElement>(null);
-    const packagesRef = useRef<HTMLDivElement>(null);
-    const howRef = useRef<HTMLDivElement>(null);
-    const ctaRef = useRef<HTMLDivElement>(null);
-    useScrollReveal(plannerRef as React.RefObject<HTMLElement>);
-    useScrollReveal(experienceRef as React.RefObject<HTMLElement>);
-    useScrollReveal(packagesRef as React.RefObject<HTMLElement>);
-    useScrollReveal(howRef as React.RefObject<HTMLElement>);
-    useScrollReveal(ctaRef as React.RefObject<HTMLElement>);
-
-
-    // Activate stats counter when section enters view
-    useEffect(() => {
-        const el = statsRef.current;
-        if (!el) return;
-        const obs = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) { setStatsActive(true); obs.disconnect(); }
-        }, { threshold: 0.3 });
-        obs.observe(el);
-        return () => obs.disconnect();
-    }, []);
-
-    const handlePlannerSelect = useCallback((key: keyof PlannerState, val: string) => {
-        setPlanner(prev => ({ ...prev, [key]: prev[key] === val ? '' : val }));
-    }, []);
+    // Mock data for display
+    const trendingEvents = [1, 2, 3, 4];
+    const weddingPackages = [1, 2, 3, 4];
 
     return (
-        <div className="landing-page" style={{ background: '#0B1E33' }}>
+        <div className="landing-page">
+            {/* Main Hero Component */}
+            <HeroCarousel />
 
-            {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
-            <section className="hero-section">
-                <div
-                    className="hero-bg"
-                    style={{ backgroundImage: `url(${weddingImg})` }}
-                />
-                <div className="hero-overlay" />
-                <div className="hero-content container">
-                    <span className="hero-eyebrow">The Art of Celebration</span>
-                    <h1 className="hero-headline">
-                        Create Moments<br />
-                        That Last <span>Forever</span>
-                    </h1>
-                    <div className="hero-gold-line" />
-                    <p className="hero-tagline">
-                        Plan weddings, conferences, and events with curated vendors,
-                        expert coordinators, and premium venues — all in one place.
-                    </p>
-                    <div className="hero-cta-group">
-                        <Link to="/category/wedding" className="hero-btn-primary">Start Planning</Link>
-                        <Link to="/category/events" className="hero-btn-secondary">Explore Events</Link>
-                    </div>
-                    <div className="hero-tabs">
-                        <Link to="/category/wedding" className="hero-tab">✦ Weddings</Link>
-                        <Link to="/category/events" className="hero-tab">✦ Events</Link>
-                        <Link to="/category/conferences" className="hero-tab">✦ Conferences</Link>
-                        <Link to="/category/meetings" className="hero-tab">✦ Meetings</Link>
-                    </div>
-                </div>
-                <div className="hero-scroll-indicator">
-                    <span>Scroll</span>
-                    <div className="scroll-arrow" />
+            <div className="container">
+                {/* 4 Category Blocks - Now using dark backgrounds and visible text */}
+                <div className="category-row">
+                    <Link to="/category/wedding" className="category-chip">Weddings</Link>
+                    <Link to="/category/event" className="category-chip">Events</Link>
+                    <Link to="/category/conference" className="category-chip">Conferences</Link>
+                    <Link to="/category/meeting" className="category-chip">Meetings</Link>
                 </div>
             </section>
 
@@ -259,23 +204,19 @@ const Landing = () => {
                             </div>
                         </div>
 
-                        {/* Divider */}
-                        <div className="planner-divider"><div className="planner-divider-line" /><span className="planner-divider-arrow">›</span></div>
-
-                        {/* Step 3 */}
-                        <div className="planner-step">
-                            <div className="planner-step-badge">
-                                <span className="planner-step-circle">03</span>
-                                <span className="planner-step-label">Location</span>
-                            </div>
-                            <div className="planner-options">
-                                {LOCATIONS.map(l => (
-                                    <span
-                                        key={l}
-                                        className={`planner-option ${planner.location === l ? 'selected' : ''}`}
-                                        onClick={() => handlePlannerSelect('location', l)}
-                                    >{l}</span>
-                                ))}
+                {/* Trending Events Section */}
+                <h2 className="section-title">Trending Events</h2>
+                <div className="events-grid">
+                    {trendingEvents.map((item) => (
+                        <div key={`trend-${item}`} className="event-card">
+                            <div 
+                                className="event-image" 
+                                style={{ backgroundImage: `url(https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=400)` }}
+                            />
+                            <div className="event-details">
+                                <div className="event-date">SAT, SEP 20 • 7:00 PM</div>
+                                <h3 className="event-title">Annual Tech Innovators Summit</h3>
+                                <div className="event-location">Grand Convention Center</div>
                             </div>
                         </div>
 
@@ -439,22 +380,19 @@ const Landing = () => {
                 </div>
             </section>
 
-            {/* ═══════════ 9. FOOTER ═══════════ */}
-            <footer className="site-footer">
-                <div className="container">
-                    <div className="footer-grid">
-                        {/* Brand */}
-                        <div>
-                            <span className="footer-brand-name">EventHub</span>
-                            <p className="footer-brand-desc">
-                                Crafting unforgettable moments for weddings, corporate events, conferences, and celebrations across India.
-                            </p>
-                            <div className="footer-socials">
-                                {['in', 'tw', 'ig', 'fb'].map(s => (
-                                    <a key={s} href="#" className="footer-social-link" aria-label={s}>
-                                        {s === 'in' ? '𝕃' : s === 'tw' ? '𝕏' : s === 'ig' ? '◉' : '◈'}
-                                    </a>
-                                ))}
+                {/* Popular Wedding Packages Section */}
+                <h2 className="section-title">Popular Wedding Packages</h2>
+                <div className="events-grid">
+                    {weddingPackages.map((item) => (
+                        <div key={`wedding-${item}`} className="event-card">
+                            <div 
+                                className="event-image" 
+                                style={{ backgroundImage: `url(https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=400)` }}
+                            />
+                            <div className="event-details">
+                                <div className="event-date">Starting from ₹1,50,000</div>
+                                <h3 className="event-title">Royal Garden Wedding</h3>
+                                <div className="event-location">Includes Venue & Decor</div>
                             </div>
                         </div>
 
@@ -501,8 +439,7 @@ const Landing = () => {
                         </div>
                     </div>
                 </div>
-            </footer>
-
+            </div>
         </div>
     );
 };
