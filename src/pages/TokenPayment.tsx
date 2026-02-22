@@ -13,7 +13,7 @@ const TokenPayment = () => {
     if (packageId === 'custom-package') {
         pkg = {
             id: 'custom-package',
-            category: 'Custom',
+            category: 'event', // Fixed TypeScript error here
             name: 'Bespoke Event Package',
             description: 'Your beautifully tailored selection of premium vendors and services.',
             price: 450000, // Mock total for the custom package
