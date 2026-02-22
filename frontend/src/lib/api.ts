@@ -1,5 +1,6 @@
 const API_BASE = import.meta.env.VITE_API_URL;
 console.log("API URL:", import.meta.env.VITE_API_URL);
+console.log("API_BASE VALUE:", API_BASE);
 
 export async function apiRequest(
   endpoint: string,
