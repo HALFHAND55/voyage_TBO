@@ -12,7 +12,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const allowedOrigins = [
   "http://localhost:5000",  // Vite dev
-  "https://voyage-1h7or1ctu-nooblancers-projects.vercel.app" // your vercel domain
+  "https://voyage-1h7or1ctu-nooblancers-projects.vercel.app",
+  "https://voyage-two-rouge.vercel.app/" // your vercel domain
 ];
 
 //import { initSocket } from "./lib/socket";
