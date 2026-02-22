@@ -10,9 +10,12 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const allowedOrigins = [
+  "http://localhost:5000",  // Vite dev
+  "https://voyage-1h7or1ctu-nooblancers-projects.vercel.app" // your vercel domain
+];
 
 //import { initSocket } from "./lib/socket";
-
 import authRoutes from "./routes/auth.route.js";
 
 dotenv.config();
@@ -31,7 +34,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000", // adjust if needed
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow non-browser requests
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
