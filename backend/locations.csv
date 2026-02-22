@@ -1,0 +1,112 @@
+code,name,country
+MUM,Mumbai,India
+DEL,Delhi,India
+BLR,Bengaluru,India
+HYD,Hyderabad,India
+CHE,Chennai,India
+KOL,Kolkata,India
+PUN,Pune,India
+AMD,Ahmedabad,India
+JAI,Jaipur,India
+UDA,Udaipur,India
+GOA,Goa,India
+CHD,Chandigarh,India
+IND,Indore,India
+LKO,Lucknow,India
+BHO,Bhopal,India
+SUR,Surat,India
+KOI,Kochi,India
+MYS,Mysuru,India
+VIS,Visakhapatnam,India
+RAN,Ranchi,India
+PAT,Patna,India
+TRI,Thiruvananthapuram,India
+SHI,Shimla,India
+DAR,Darjeeling,India
+GUR,Gurugram,India
+NOI,Noida,India
+NAG,Nagpur,India
+VAR,Varanasi,India
+AMR,Amritsar,India
+DUB,Dubai,UAE
+ABU,Abu Dhabi,UAE
+DOH,Doha,Qatar
+MUS,Muscat,Oman
+RIY,Riyadh,Saudi Arabia
+JED,Jeddah,Saudi Arabia
+KUW,Kuwait City,Kuwait
+BAH,Manama,Bahrain
+TEL,Tel Aviv,Israel
+IST,Istanbul,Turkey
+LON,London,United Kingdom
+GLA,Glasgow,United Kingdom
+BHX,Birmingham ,United Kingdom
+MAN,Manchester,United Kingdom
+PAR,Paris,France
+NIC,Nice,France
+ROM,Rome,Italy
+MIL,Milan,Italy
+VEN,Venice,Italy
+BAR,Barcelona,Spain
+MAD,Madrid,Spain
+AMS,Amsterdam,Netherlands
+BER,Berlin,Germany
+MUN,Munich,Germany
+ZUR,Zurich,Switzerland
+GEN,Geneva,Switzerland
+VIE,Vienna,Austria
+PRG,Prague,Czech Republic
+BUD,Budapest,Hungary
+ATH,Athens,Greece
+LIS,Lisbon,Portugal
+BRU,Brussels,Belgium
+CPH,Copenhagen,Denmark
+OSL,Oslo,Norway
+STO,Stockholm,Sweden
+HEL,Helsinki,Finland
+DUBN,Dublin,Ireland
+SIN,Singapore,Singapore
+BKK,Bangkok,Thailand
+KUL,Kuala Lumpur,Malaysia
+HKG,Hong Kong,China
+MAC,Macau,China
+TOK,Tokyo,Japan
+OSA,Osaka,Japan
+SEL,Seoul,South Korea
+TPE,Taipei,Taiwan
+SHA,Shanghai,China
+BEI,Beijing,China
+SYD,Sydney,Australia
+MEL,Melbourne,Australia
+AKL,Auckland,New Zealand
+BALI,Bali,Indonesia
+PHU,Phuket,Thailand
+HANO,Hanoi,Vietnam
+HCM,Ho Chi Minh City,Vietnam
+JKT,Jakarta,Indonesia
+MANL,Manila,Philippines
+KTM,Kathmandu,Nepal
+COL,Colombo,Sri Lanka
+MALE,Male,Maldives
+PEN,Penang,Malaysia
+DAN,Danang,Vietnam
+NYC,New York,USA
+LAX,Los Angeles,USA
+SFO,San Francisco,USA
+CHI,Chicago,USA
+LAS,Las Vegas,USA
+MIA,Miami,USA
+HOU,Houston,USA
+DAL,Dallas,USA
+SEA,Seattle,USA
+BOS,Boston,USA
+ATL,Atlanta,USA
+TOR,Toronto,Canada
+VAN,Vancouver,Canada
+MTL,Montreal,Canada
+MEX,Mexico City,Mexico
+CUN,Cancun,Mexico
+PAN,Panama City,Panama
+DEN,Denver,USA
+PHX,Phoenix,USA
+ORL,Orlando,USA
