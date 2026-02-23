@@ -50,7 +50,6 @@ enum InventoryCategory {
 
 model User {
   id            String   @id @default(uuid())
-
   username      String   @unique
   fullName      String
   email         String   @unique
@@ -99,7 +98,7 @@ model Event {
   creator   User     @relation(fields: [creatorId], references: [id])
   location  Location @relation("EventLocation", fields: [locationCode], references: [code])
 
-  vendors     EventVendor[]
+  operations  EventOperation[]
   allocations EventInventoryAllocation[]
 
   createdAt DateTime @default(now())
@@ -107,6 +106,32 @@ model Event {
 
   @@index([eventCode])
   @@index([creatorId])
+}
+
+//////////////////////////////////////////////////////
+// EVENT OPERATION
+//////////////////////////////////////////////////////
+
+model EventOperation {
+  id        String @id @default(uuid())
+
+  eventId   String
+  category  String
+  metadata  Json?
+
+  finalizedVendorId String?
+
+  event   Event        @relation(fields: [eventId], references: [id])
+  vendors EventVendor[]
+  allocations EventInventoryAllocation[]
+
+  finalizedVendor Vendor? @relation("FinalizedVendor", fields: [finalizedVendorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, category])
+  @@index([eventId])
 }
 
 //////////////////////////////////////////////////////
@@ -121,36 +146,37 @@ model Vendor {
   isActive      Boolean  @default(true)
 
   inventoryItems InventoryItem[]
-  events         EventVendor[]
+  participations EventVendor[]
   allocations    EventInventoryAllocation[]
+
+  finalizedOperations EventOperation[] @relation("FinalizedVendor")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 //////////////////////////////////////////////////////
-// EVENT-VENDOR (Negotiation Layer)
+// EVENT VENDOR (NEGOTIATION)
 //////////////////////////////////////////////////////
 
 model EventVendor {
-  id       String @id @default(uuid())
+  id           String @id @default(uuid())
 
-  eventId  String
-  vendorId String
+  operationId  String
+  vendorId     String
 
   status            VendorEventStatus @default(INVITED)
   quotedAmount      Float?
   negotiatedAmount  Float?
 
-  event  Event  @relation(fields: [eventId], references: [id])
-  vendor Vendor @relation(fields: [vendorId], references: [id])
+  operation EventOperation @relation(fields: [operationId], references: [id])
+  vendor    Vendor         @relation(fields: [vendorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([eventId, vendorId])
+  @@unique([operationId, vendorId])
   @@index([vendorId])
-  @@index([eventId])
 }
 
 //////////////////////////////////////////////////////
@@ -177,26 +203,27 @@ model InventoryItem {
 }
 
 //////////////////////////////////////////////////////
-// EVENT INVENTORY ALLOCATION (Vendor-Scoped)
+// INVENTORY ALLOCATION
 //////////////////////////////////////////////////////
 
 model EventInventoryAllocation {
   id                String @id @default(uuid())
 
   eventId           String
+  operationId       String
   inventoryItemId   String
   vendorId          String
   quantityAllocated Int
 
-  event         Event         @relation(fields: [eventId], references: [id])
-  inventoryItem InventoryItem @relation(fields: [inventoryItemId], references: [id])
-  vendor        Vendor        @relation(fields: [vendorId], references: [id])
+  event         Event          @relation(fields: [eventId], references: [id])
+  operation     EventOperation @relation(fields: [operationId], references: [id])
+  inventoryItem InventoryItem  @relation(fields: [inventoryItemId], references: [id])
+  vendor        Vendor         @relation(fields: [vendorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([eventId, inventoryItemId, vendorId])
-  @@index([inventoryItemId])
+  @@unique([operationId, inventoryItemId])
   @@index([vendorId])
   @@index([eventId])
 }
