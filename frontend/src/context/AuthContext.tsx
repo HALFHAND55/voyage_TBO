@@ -28,6 +28,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   const refreshAuth = async () => {
+    setLoading(true);
+
     try {
       const userData = await apiRequest("/auth/check");
       setUser(userData);

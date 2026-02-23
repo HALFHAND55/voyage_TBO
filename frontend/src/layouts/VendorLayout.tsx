@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { NavLink, Outlet } from 'react-router-dom';
 import {
     LayoutDashboard, Package, BarChart2,
@@ -17,6 +19,12 @@ const NAV_ITEMS = [
 
 const VendorLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        await logout();
+        navigate("/", { replace: true });
+    };
 
     const closeSidebar = () => setSidebarOpen(false);
 
@@ -53,9 +61,11 @@ const VendorLayout = () => {
                     >
                         <Settings size={16} /> Settings
                     </NavLink>
-                    <button className="vl-navlink" style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
+                    <button className="vl-navlink" style={{background: "none", border: "none", cursor: "pointer", width: "100%", textAlign: "left",}}
+                        onClick={handleLogout}
+                        >
                         <LogOut size={16} /> Logout
-                    </button>
+                        </button>
                 </div>
             </aside>
 

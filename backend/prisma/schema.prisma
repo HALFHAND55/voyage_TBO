@@ -7,6 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//////////////////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////////////////
+
 enum EventType {
   WEDDING
   MEETING
@@ -14,6 +18,22 @@ enum EventType {
   CONFERENCE
   EXHIBITION
 }
+
+enum EventStatus {
+  NEGOTIATION
+  CONFIRMED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum VendorEventStatus {
+  INVITED
+  QUOTED
+  ACCEPTED
+  REJECTED
+}
+
 enum InventoryCategory {
   TECHNICAL
   FURNITURE
@@ -23,6 +43,10 @@ enum InventoryCategory {
   ACCOMMODATION
   FLOOR_SPACE
 }
+
+//////////////////////////////////////////////////////
+// USER
+//////////////////////////////////////////////////////
 
 model User {
   id            String   @id @default(uuid())
@@ -38,27 +62,37 @@ model User {
   state         String?
   country       String?
 
-  events Event[]
+  events        Event[]
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
 
+//////////////////////////////////////////////////////
+// LOCATION
+//////////////////////////////////////////////////////
+
 model Location {
-  code      String  @id   
+  code      String  @id
   name      String
   country   String
 
   events Event[] @relation("EventLocation")
 }
 
+//////////////////////////////////////////////////////
+// EVENT
+//////////////////////////////////////////////////////
+
 model Event {
   id            String   @id @default(uuid())
   eventCode     String
-  isActive      Boolean
   type          EventType
+  status        EventStatus @default(NEGOTIATION)
+
   startDate     DateTime
   endDate       DateTime
+
   locationCode  String
   creatorId     String
 
@@ -70,7 +104,14 @@ model Event {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([eventCode])
+  @@index([creatorId])
 }
+
+//////////////////////////////////////////////////////
+// VENDOR
+//////////////////////////////////////////////////////
 
 model Vendor {
   id            String   @id @default(uuid())
@@ -81,21 +122,40 @@ model Vendor {
 
   inventoryItems InventoryItem[]
   events         EventVendor[]
+  allocations    EventInventoryAllocation[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @updatedAt
 }
+
+//////////////////////////////////////////////////////
+// EVENT-VENDOR (Negotiation Layer)
+//////////////////////////////////////////////////////
 
 model EventVendor {
   id       String @id @default(uuid())
+
   eventId  String
   vendorId String
+
+  status            VendorEventStatus @default(INVITED)
+  quotedAmount      Float?
+  negotiatedAmount  Float?
 
   event  Event  @relation(fields: [eventId], references: [id])
   vendor Vendor @relation(fields: [vendorId], references: [id])
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([eventId, vendorId])
+  @@index([vendorId])
+  @@index([eventId])
 }
+
+//////////////////////////////////////////////////////
+// INVENTORY
+//////////////////////////////////////////////////////
 
 model InventoryItem {
   id            String   @id @default(uuid())
@@ -112,16 +172,31 @@ model InventoryItem {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([vendorId])
 }
+
+//////////////////////////////////////////////////////
+// EVENT INVENTORY ALLOCATION (Vendor-Scoped)
+//////////////////////////////////////////////////////
 
 model EventInventoryAllocation {
   id                String @id @default(uuid())
+
   eventId           String
   inventoryItemId   String
+  vendorId          String
   quantityAllocated Int
 
   event         Event         @relation(fields: [eventId], references: [id])
   inventoryItem InventoryItem @relation(fields: [inventoryItemId], references: [id])
+  vendor        Vendor        @relation(fields: [vendorId], references: [id])
 
-  @@unique([eventId, inventoryItemId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, inventoryItemId, vendorId])
+  @@index([inventoryItemId])
+  @@index([vendorId])
+  @@index([eventId])
 }

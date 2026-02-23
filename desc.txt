@@ -1,5 +1,3 @@
-[https://voyage-tbo-aktd.vercel.app/](https://voyage-tbo-aktd.vercel.app/)
-
 EVENTHUB – CURRENT SYSTEM STATE (POSTGRESQL + MONOREPO + DUAL AUTH)
 
 ====================================================================
