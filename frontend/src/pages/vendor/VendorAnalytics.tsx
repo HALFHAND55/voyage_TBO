@@ -7,12 +7,12 @@ import {
     getEventPerformance,
     getTrendData,
     getDateRange,
-} from './analytics/analyticsData';
-import AnalyticsKPI from './analytics/AnalyticsKPI';
-import InventoryCategoryChart from './analytics/InventoryCategoryChart';
-import InventoryDonutChart from './analytics/InventoryDonutChart';
-import UtilizationTrendChart from './analytics/UtilizationTrendChart';
-import EventPerformanceTable from './analytics/EventPerformanceTable';
+} from './dashboard/analyticsData';
+import AnalyticsKPI from './dashboard/AnalyticsKPI';
+import InventoryCategoryChart from './dashboard/InventoryCategoryChart';
+import InventoryDonutChart from './dashboard/InventoryDonutChart';
+import UtilizationTrendChart from './dashboard/UtilizationTrendChart';
+import EventPerformanceTable from './dashboard/EventPerformanceTable';
 import '../../styles/VendorAnalytics.css';
 import '../../styles/VendorLayout.css';
 

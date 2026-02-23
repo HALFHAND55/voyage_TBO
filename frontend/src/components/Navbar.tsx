@@ -23,16 +23,22 @@ export default function Navbar() {
         </div>
 
         <div className="nav-right desktop-only">
-          <button className="nav-link"><MapPin size={16} /> Location</button>
+          <button className="nav-link"><MapPin size={16}/>Location</button>
           <Link to="/find-events" className="nav-link">Find Events</Link>
-          <Link to="/create-event" className="nav-link">Create Event</Link>
           <Link to="/tickets" className="nav-link">Find My Tickets</Link>
           {!user ? (
-            <><Link to="/login" className="nav-link"><LogIn size={16} />Log In</Link>
-            <Link to="/signup" className="nav-link btn-signup">Sign Up</Link></>
-          ) : ( 
-            <><span className="nav-link">{user.fullName}</span>
-            <button onClick={logout} className="nav-link">Logout</button></>
+            <>
+              <Link to="/vendor" className="nav-link">Vendor Portal</Link>
+              <Link to="/login" className="nav-link"><LogIn size={16} /> Log In</Link>
+              <Link to="/signup" className="nav-link btn-signup">Sign Up</Link>
+            </>
+          ) : (
+            <>
+              <span className="nav-link">{user.fullName}</span>
+              <button onClick={logout} className="nav-link">
+                Logout
+              </button>
+            </>
           )}
         </div>
 

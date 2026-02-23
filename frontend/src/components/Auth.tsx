@@ -23,7 +23,7 @@ const Auth: React.FC<AuthProps> = ({ initialMode = 'login' }) => {
   
   const navigate = useNavigate();
   const location = useLocation();
-  const { refreshUser } = useAuth();
+  const { refreshAuth } = useAuth();
 
   // Sync state with URL changes
   useEffect(() => {
@@ -92,7 +92,7 @@ const Auth: React.FC<AuthProps> = ({ initialMode = 'login' }) => {
           }),
         });
 
-        await refreshUser();
+        await refreshAuth();
         navigate('/');
       }
 
@@ -105,10 +105,10 @@ const Auth: React.FC<AuthProps> = ({ initialMode = 'login' }) => {
           }),
         });
         
-        console.log("refreshUser running");
-        await refreshUser();
+        console.log("refreshAuth running");
+        await refreshAuth();
         navigate('/');
-        console.log("Calling refreshUser");
+        console.log("Calling refreshAuth");
       }
 
       if (view === 'forgot-password') {

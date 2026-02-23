@@ -6,11 +6,17 @@ interface User {
   email: string;
   fullName: string;
 }
+interface Vendor {
+  _id: string;
+  email: string;
+  businessName: string;
+}
 
 interface AuthContextType {
   user: User | null;
+  vendor: Vendor | null;
   loading: boolean;
-  refreshUser: () => Promise<void>;
+  refreshAuth: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -18,30 +24,41 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [vendor, setVendor] = useState<Vendor | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshUser = async () => {
+  const refreshAuth = async () => {
     try {
-      const data = await apiRequest("/auth/check");
-      setUser(data);
+      const userData = await apiRequest("/auth/check");
+      setUser(userData);
     } catch {
       setUser(null);
-    } finally {
-      setLoading(false);
     }
+
+    try {
+      const vendorData = await apiRequest("/auth/vendor/check");
+      setVendor(vendorData);
+    } catch {
+      setVendor(null);
+    }
+
+    setLoading(false);
   };
 
   const logout = async () => {
-    await apiRequest("/auth/logout", { method: "POST" });
+    if (user) await apiRequest("/auth/logout", { method: "POST" });
+    if (vendor) await apiRequest("/auth/vendor/logout", { method: "POST" });
+
     setUser(null);
+    setVendor(null);
   };
 
   useEffect(() => {
-    refreshUser();
+    refreshAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, refreshUser, logout }}>
+    <AuthContext.Provider value={{ user, vendor, loading, refreshAuth, logout }}>
       {children}
     </AuthContext.Provider>
   );
