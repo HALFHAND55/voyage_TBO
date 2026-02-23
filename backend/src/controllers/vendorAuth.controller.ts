@@ -45,12 +45,13 @@ export const vendorLogin = async (
       res.status(400).json({ message: "Invalid credentials" });
       return;
     }
-
+    console.log("Vendor found:", vendor);
+    console.log("Stored hash:", vendor?.passwordHash);  
     const isPasswordCorrect = await bcrypt.compare(
       password,
       vendor.passwordHash
     );
-
+    console.log("Password match:", isPasswordCorrect);
     if (!isPasswordCorrect) {
       res.status(400).json({ message: "Invalid credentials" });
       return;

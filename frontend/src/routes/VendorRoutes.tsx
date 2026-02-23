@@ -24,6 +24,7 @@ import SecuritySettings from "../pages/vendor/settings/SecuritySettings";
 import NotificationSettings from "../pages/vendor/settings/NotificationSettings";
 import PreferencesSettings from "../pages/vendor/settings/PreferencesSettings";
 import DangerZone from "../pages/vendor/settings/DangerZone";
+import VendorGuard from "./VendorGuard";
 
 const VendorRoutes = () => (
   <>
@@ -33,32 +34,34 @@ const VendorRoutes = () => (
     <Route path="/vendor/signup" element={<VendorAuthPage initialMode="signup" />} />
 
     {/* ───── PROTECTED VENDOR DASHBOARD ───── */}
-    <Route path="/vendor" element={<VendorLayout />}>
-      <Route path="overview" element={<VendorOverview />} />
-      <Route path="analytics" element={<VendorAnalytics />} />
-      <Route path="archive" element={<EventArchivePage />} />
-      <Route path="archive/:eventId" element={<ArchiveDetailsPage />} />
-      <Route path="active-events" element={<ActiveEventsPage />} />
-      <Route path="active-events/:eventId" element={<ActiveEventDetailsPage />} />
-      <Route path="payments" element={<PaymentsPage />} />
-      <Route path="payments/:eventId" element={<PaymentDetailsPage />} />
-      <Route path="events/:eventId" element={<EventDetailsPage />} />
+    <Route element={<VendorGuard />}>
+        <Route path="/vendor" element={<VendorLayout />}>
+        <Route path="overview" element={<VendorOverview />} />
+        <Route path="analytics" element={<VendorAnalytics />} />
+        <Route path="archive" element={<EventArchivePage />} />
+        <Route path="archive/:eventId" element={<ArchiveDetailsPage />} />
+        <Route path="active-events" element={<ActiveEventsPage />} />
+        <Route path="active-events/:eventId" element={<ActiveEventDetailsPage />} />
+        <Route path="payments" element={<PaymentsPage />} />
+        <Route path="payments/:eventId" element={<PaymentDetailsPage />} />
+        <Route path="events/:eventId" element={<EventDetailsPage />} />
 
-      <Route path="inventory" element={<InventoryLayout />}>
-        <Route index element={<InventoryTable />} />
-        <Route path="calendar" element={<InventoryCalendar />} />
-        <Route path="heatmap" element={<InventoryHeatmap />} />
-        <Route path="allocations" element={<InventoryAllocations />} />
-      </Route>
+        <Route path="inventory" element={<InventoryLayout />}>
+            <Route index element={<InventoryTable />} />
+            <Route path="calendar" element={<InventoryCalendar />} />
+            <Route path="heatmap" element={<InventoryHeatmap />} />
+            <Route path="allocations" element={<InventoryAllocations />} />
+        </Route>
 
-      <Route path="settings" element={<SettingsLayout />}>
-        <Route index element={<Navigate to="profile" replace />} />
-        <Route path="profile" element={<ProfileSettings />} />
-        <Route path="security" element={<SecuritySettings />} />
-        <Route path="notifications" element={<NotificationSettings />} />
-        <Route path="preferences" element={<PreferencesSettings />} />
-        <Route path="danger" element={<DangerZone />} />
-      </Route>
+        <Route path="settings" element={<SettingsLayout />}>
+            <Route index element={<Navigate to="profile" replace />} />
+            <Route path="profile" element={<ProfileSettings />} />
+            <Route path="security" element={<SecuritySettings />} />
+            <Route path="notifications" element={<NotificationSettings />} />
+            <Route path="preferences" element={<PreferencesSettings />} />
+            <Route path="danger" element={<DangerZone />} />
+        </Route>
+        </Route>
     </Route>
   </>
 );
