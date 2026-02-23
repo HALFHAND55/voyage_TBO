@@ -17,6 +17,7 @@ const allowedOrigins = [
 
 //import { initSocket } from "./lib/socket";
 import authRoutes from "./routes/auth.route.js";
+import eventRoutes from "./routes/event.route.js";
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use(
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/events", eventRoutes);
 
 // Production static serving
 if (process.env.NODE_ENV === "production") {

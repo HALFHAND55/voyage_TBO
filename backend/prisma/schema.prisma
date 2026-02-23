@@ -77,6 +77,7 @@ model Location {
   country   String
 
   events Event[] @relation("EventLocation")
+  vendors Vendor[]   
 }
 
 //////////////////////////////////////////////////////
@@ -116,7 +117,7 @@ model EventOperation {
   id        String @id @default(uuid())
 
   eventId   String
-  category  String
+  category  InventoryCategory
   metadata  Json?
 
   finalizedVendorId String?
@@ -145,14 +146,37 @@ model Vendor {
   passwordHash  String
   isActive      Boolean  @default(true)
 
+  baseLocationCode String
+  baseLocation     Location @relation(fields: [baseLocationCode], references: [code])
+
+  rating        Float   @default(0)
+  reviewCount   Int     @default(0)
+  starLevel     Int     @default(3)
+
   inventoryItems InventoryItem[]
   participations EventVendor[]
   allocations    EventInventoryAllocation[]
-
   finalizedOperations EventOperation[] @relation("FinalizedVendor")
+  categories VendorCategory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model VendorCategory {
+  id        String @id @default(uuid())
+
+  vendorId  String
+  category  InventoryCategory
+  metadata  Json?
+
+  vendor Vendor @relation(fields: [vendorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([vendorId, category])
+  @@index([vendorId])
 }
 
 //////////////////////////////////////////////////////
