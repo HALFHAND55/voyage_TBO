@@ -11,6 +11,8 @@ import HostCustomize from "../pages/HostCustomize";
 import HostMarketplace from "../pages/HostMarketplace";
 import TokenPayment from "../pages/TokenPayment";
 import GuestCodeEntry from "../pages/GuestCodeEntry";
+import HostLocationDates from "../pages/HostLocationDates";
+import HostHotelSelection from "../pages/HostHotelSelection";
 
 const PublicRoutes = () => (
   <Route path="/" element={<MainLayout />}>
@@ -21,6 +23,9 @@ const PublicRoutes = () => (
     <Route path="forgot-password" element={<Auth initialMode="forgot-password" />} />
 
     <Route path="category/:category" element={<CategoryRoleSelection />} />
+
+    <Route path="host/location-dates/:category" element={<HostLocationDates />} />
+    <Route path="host/hotels/:category" element={<HostHotelSelection />} />
 
     <Route path="host/create-event" element={<HostEventForm />} />
     <Route path="host/questionnaire/:category" element={<HostQuestionnaire />} />

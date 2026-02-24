@@ -15,15 +15,15 @@ const CategoryRoleSelection = () => {
           Select your journey. How are you attending this event?
         </p>
 
-                <div className="role-cards">
-                    {/* UPDATED: This now points to the questionnaire instead of the marketplace */}
-                    <Link to={`/host/questionnaire/${category}`} className="role-card">
-                        <div className="icon-wrapper host-icon">
-                            <Calendar size={48} />
-                        </div>
-                        <h2>I am a Host</h2>
-                        <p>I want to plan and book vendors for my {category}.</p>
-                    </Link>
+        <div className="role-cards">
+          {/* UPDATED: This now points to the questionnaire instead of the marketplace */}
+          <Link to={`/host/location-dates/${category}`} className="role-card">
+            <div className="icon-wrapper host-icon">
+              <Calendar size={48} />
+            </div>
+            <h2>I am a Host</h2>
+            <p>I want to plan and book vendors for my {category}.</p>
+          </Link>
 
           <Link to="/guest" className="role-card">
             <div className="role-icon-outer">

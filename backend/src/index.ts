@@ -17,6 +17,7 @@ const allowedOrigins = [
 
 //import { initSocket } from "./lib/socket";
 import authRoutes from "./routes/auth.route.js";
+import hotelRoutes from "./routes/hotel.route.js";
 
 dotenv.config();
 
@@ -48,12 +49,13 @@ app.use(
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/hotels", hotelRoutes);
 
 // Production static serving
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-  app.get("*", (_req, res) => {
+  app.get("/", (_req, res) => {
     res.sendFile(
       path.join(__dirname, "../frontend/dist/index.html")
     );

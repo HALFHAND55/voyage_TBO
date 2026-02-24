@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ChevronDown, X, Check } from 'lucide-react';
 import '../styles/HostEventForm.css';
 
@@ -146,21 +146,23 @@ type Pkg = 'custom' | 'designed' | null;
 
 const HostQuestionnaire = () => {
     const navigate = useNavigate();
-    
+    const routeState = useLocation().state as any;
+
     // SAFETY NET 1: Ensure we grab category via useParams, and provide a strict fallback.
     const { category } = useParams<{ category: string }>();
     const cat = normalise((category || 'wedding').toLowerCase());
-    
+
     const isWedding = cat === 'wedding';
     const heading = CATEGORY_HEADINGS[cat] ?? DEFAULT_H;
     const typeOptions = EVENT_TYPES[cat] ?? EVENT_TYPES['wedding'];
 
-    // Core fields
+    // Core fields (initialized from route state)
     const [types, setTypes] = useState<string[]>([]);
-    const [location, setLocation] = useState('');
+    const location = routeState?.location || '';
     const [budget, setBudget] = useState('');
-    const [start, setStart] = useState('');
-    const [end, setEnd] = useState('');
+    const start = routeState?.startDate || '';
+    const end = routeState?.endDate || '';
+    const selectedHotel = routeState?.selectedHotel || null;
     const [pkg, setPkg] = useState<Pkg>(null);
 
     // Wedding fields
@@ -173,7 +175,6 @@ const HostQuestionnaire = () => {
     // Validation
     const [tried, setTried] = useState(false);
     const [dateErr, setDateErr] = useState('');
-    const today = new Date().toISOString().split('T')[0];
 
     useEffect(() => { setTypes([]); setGuests(''); setRooms(''); setWho(''); setThemes([]); setDest(''); setTried(false); }, [cat]);
     useEffect(() => { setDateErr(start && end && end < start ? 'End date cannot be before start date.' : ''); }, [start, end]);
@@ -185,9 +186,9 @@ const HostQuestionnaire = () => {
         setTried(true);
         if (!valid) return;
 
-        // Bundle up all the user's answers
+        // Bundle up all the user's answers including the pre-selected hotel
         const formData = {
-            category: cat, types, location, budget, start, end, guests, rooms, who, themes, dest, pkg
+            category: cat, types, location, budget, start, end, guests, rooms, who, themes, dest, pkg, selectedHotel
         };
 
         // SAFETY NET 2: Never allow a blank category when navigating to the marketplace
@@ -224,12 +225,24 @@ const HostQuestionnaire = () => {
                             error={tried && types.length === 0} />
                     </Field>
 
-                    {/* ── Location + Budget ── */}
-                    <div className="ef-row">
-                        <Field label="Location" required>
-                            <input className="ef-input" type="text" placeholder="City or venue"
-                                value={location} onChange={e => setLocation(e.target.value)} />
-                        </Field>
+                    {/* ── Location + Dates (Read Only Context) ── */}
+                    {location && start && end && (
+                        <div style={{ marginBottom: '2rem', padding: '1rem', background: '#252525', borderRadius: '12px', border: '1px solid rgba(198, 167, 94, 0.2)' }}>
+                            <h3 style={{ fontSize: '1rem', color: '#C6A75E', marginBottom: '0.5rem' }}>Your Selection</h3>
+                            <div style={{ display: 'flex', gap: '2rem', color: '#B5B5B5', fontSize: '0.9rem' }}>
+                                <span><strong>Location:</strong> {location}</span>
+                                <span><strong>Dates:</strong> {start} to {end}</span>
+                            </div>
+                            {selectedHotel && (
+                                <div style={{ marginTop: '0.5rem', color: '#B5B5B5', fontSize: '0.9rem' }}>
+                                    <span><strong>Selected Hotel:</strong> {selectedHotel.HotelName}</span>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* ── Budget ── */}
+                    <div className="ef-row" style={{ marginTop: '1rem' }}>
                         <Field label="Budget" required>
                             <Select value={budget} onChange={setBudget}>
                                 <option value="">Select range…</option>
@@ -238,18 +251,6 @@ const HostQuestionnaire = () => {
                                 <option value="3L-5L">₹3,00,000 – ₹5,00,000</option>
                                 <option value="5L+">₹5,00,000+</option>
                             </Select>
-                        </Field>
-                    </div>
-
-                    {/* ── Dates ── */}
-                    <div className="ef-row">
-                        <Field label="Start Date" required>
-                            <input className="ef-input" type="date" min={today}
-                                value={start} onChange={e => setStart(e.target.value)} />
-                        </Field>
-                        <Field label="End Date" required error={dateErr || undefined}>
-                            <input className={`ef-input ${dateErr ? 'ef-input--err' : ''}`} type="date"
-                                min={start || today} value={end} onChange={e => setEnd(e.target.value)} />
                         </Field>
                     </div>
 
