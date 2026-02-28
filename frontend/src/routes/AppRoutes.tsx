@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Routes } from "react-router-dom";
 import PublicRoutes from "./PublicRoutes";
 import DashboardRoutes from "./DashboardRoutes";
@@ -11,6 +12,58 @@ const AppRoutes = () => {
       {VendorRoutes()}
     </Routes>
   );
+=======
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from '../layouts/MainLayout';
+import Landing from '../pages/Landing';
+import CategoryRoleSelection from '../pages/CategoryRoleSelection';
+import HostMarketplace from '../pages/HostMarketplace';
+import HostEventForm from '../pages/HostEventForm';
+import TokenPayment from '../pages/TokenPayment';
+import HostDashboard from '../pages/HostDashboard';
+import GuestCodeEntry from '../pages/GuestCodeEntry';
+import GuestDashboard from '../pages/GuestDashboard';
+
+// Import the new components we created
+import Auth from '../components/Auth';
+import HostQuestionnaire from '../pages/HostQuestionnaire'; 
+import HostCustomize from '../pages/HostCustomize';
+import FlightBooking from '../pages/FlightBooking'; // FIXED IMPORT PATH
+
+const AppRoutes = () => {
+    return (
+        <Routes>
+            <Route path="/" element={<MainLayout />}>
+                <Route index element={<Landing />} />
+
+                {/* Authentication Routes */}
+                <Route path="login" element={<Auth initialMode="login" />} />
+                <Route path="signup" element={<Auth initialMode="signup" />} />
+                <Route path="forgot-password" element={<Auth initialMode="forgot-password" />} />
+
+                {/* Category & Role Selection */}
+                <Route path="category/:category" element={<CategoryRoleSelection />} />
+
+                {/* Host Flow */}
+                <Route path="host/create-event" element={<HostEventForm />} />
+                <Route path="host/questionnaire/:category" element={<HostQuestionnaire />} />
+                <Route path="host/customize" element={<HostCustomize />} /> 
+                <Route path="host/marketplace/:category" element={<HostMarketplace />} />
+                <Route path="payment/:packageId" element={<TokenPayment />} />
+
+                {/* Travel & Flight Concierge */}
+                <Route path="book-flight" element={<FlightBooking />} />
+
+                {/* Guest Flow */}
+                <Route path="guest" element={<GuestCodeEntry />} />
+            </Route>
+
+            {/* Dashboards (No MainLayout or simplified) */}
+            <Route path="host/dashboard" element={<HostDashboard />} />
+            <Route path="guest/dashboard" element={<GuestDashboard />} />
+        </Routes>
+    );
+>>>>>>> c3078db (Added Flight Concierge, updated host customization, and fixed layout styles)
 };
 
 export default AppRoutes;

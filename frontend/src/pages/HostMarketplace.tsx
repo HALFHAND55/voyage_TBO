@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { VENDOR_PACKAGES } from '../mockData/vendors';
-import { Star, Check } from 'lucide-react';
+import { Star, Check, Plane } from 'lucide-react';
 
 const HostMarketplace = () => {
     const { category } = useParams<{ category: string }>();
@@ -19,6 +19,10 @@ const HostMarketplace = () => {
 
     const handleSelect = (pkgId: string) => {
         navigate(`/payment/${pkgId}`);
+    };
+
+    const handleFlightBooking = () => {
+        navigate(`/book-flight`);
     };
 
     const displayName = category
@@ -62,6 +66,25 @@ const HostMarketplace = () => {
             </div>
 
             <div className="container">
+                {/* --- FLIGHT BOOKING BANNER --- */}
+                <div className="flight-banner">
+                    <div className="flight-banner-content">
+                        <div className="flight-banner-icon">
+                            <Plane size={28} color="#C6A75E" />
+                        </div>
+                        <div>
+                            <h3 className="flight-banner-title">Travel & Flight Concierge</h3>
+                            <p className="flight-banner-desc">
+                                Expecting out-of-town guests? Seamlessly arrange group flights, capture guest demographics, and manage travel from top locations.
+                            </p>
+                        </div>
+                    </div>
+                    <button className="btn flight-banner-btn" onClick={handleFlightBooking}>
+                        Setup Travel Requirements
+                    </button>
+                </div>
+                {/* ------------------------------- */}
+
                 <div className="marketplace-grid">
                     {filteredPackages.length === 0 && (
                         <p style={{ color: '#B5B5B5', gridColumn: '1 / -1', padding: '2rem 0' }}>
@@ -104,7 +127,7 @@ const HostMarketplace = () => {
 
                                 <button
                                     className="btn btn-primary"
-                                    style={{ width: '100%', justifyContent: 'center', marginTop: '0.25rem' }}
+                                    style={{ width: '100%', justifyContent: 'center', marginTop: '0.25rem', backgroundColor: '#C6A75E', color: '#121212' }}
                                     onClick={() => handleSelect(pkg.id)}
                                 >
                                     Select Package
@@ -116,6 +139,81 @@ const HostMarketplace = () => {
             </div>
 
             <style>{`
+                /* Flight Banner Styles */
+                .flight-banner {
+                    background: linear-gradient(135deg, #1A1A1D 0%, #121212 100%);
+                    border: 1px solid rgba(198, 167, 94, 0.3);
+                    border-radius: 12px;
+                    padding: 2rem;
+                    margin-bottom: 3rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 2rem;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+                    position: relative;
+                    overflow: hidden;
+                }
+                
+                /* Subtle glow behind the banner */
+                .flight-banner::before {
+                    content: '';
+                    position: absolute;
+                    top: -50%;
+                    left: -50%;
+                    width: 200%;
+                    height: 200%;
+                    background: radial-gradient(circle at center, rgba(198, 167, 94, 0.05) 0%, transparent 60%);
+                    pointer-events: none;
+                }
+
+                .flight-banner-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.5rem;
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .flight-banner-icon {
+                    background: rgba(198, 167, 94, 0.1);
+                    padding: 1rem;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1px solid rgba(198, 167, 94, 0.2);
+                }
+
+                .flight-banner-title {
+                    font-family: var(--font-family-serif);
+                    font-size: 1.4rem;
+                    color: #FFFFFF;
+                    margin-bottom: 0.25rem;
+                }
+
+                .flight-banner-desc {
+                    color: #B5B5B5;
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                    max-width: 600px;
+                }
+
+                .flight-banner-btn {
+                    background-color: transparent;
+                    color: #C6A75E;
+                    border: 1px solid #C6A75E;
+                    white-space: nowrap;
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .flight-banner-btn:hover {
+                    background-color: #C6A75E;
+                    color: #121212;
+                }
+
+                /* Grid & Card Styles */
                 .marketplace-grid {
                     display: grid;
                     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -200,6 +298,16 @@ const HostMarketplace = () => {
                     color: #C6A75E;
                     margin-bottom: 1rem;
                     letter-spacing: -0.5px;
+                }
+                @media (max-width: 768px) {
+                    .flight-banner {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        text-align: left;
+                    }
+                    .flight-banner-btn {
+                        width: 100%;
+                    }
                 }
                 @media (max-width: 640px) {
                     .marketplace-grid { grid-template-columns: 1fr; }

@@ -1,9 +1,7 @@
-import { MapPin, Search, Menu, X, LogIn } from 'lucide-react';
+import { Search, Menu, X, LogIn, Store } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useAuth } from '../context/AuthContext';
-
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,6 +21,7 @@ export default function Navbar() {
         </div>
 
         <div className="nav-right desktop-only">
+<<<<<<< HEAD
           <button className="nav-link"><MapPin size={16}/>Location</button>
           <Link to="/find-events" className="nav-link">Find Events</Link>
           <Link to="/tickets" className="nav-link">Find My Tickets</Link>
@@ -38,6 +37,25 @@ export default function Navbar() {
               <button onClick={logout} className="nav-link">
                 Logout
               </button>
+=======
+          <Link to="/find-events" className="nav-link">Find Events</Link>
+          <Link to="/create-event" className="nav-link">Create Event</Link>
+          
+          {/* Vendor Portal Link */}
+          <Link to="/vendor/login" className="nav-link vendor-link">
+            <Store size={16} /> Vendor Portal
+          </Link>
+
+          {!user ? (
+            <>
+              <Link to="/login" className="nav-link"><LogIn size={16} />Log In</Link>
+              <Link to="/signup" className="nav-link btn-signup">Sign Up</Link>
+            </>
+          ) : ( 
+            <>
+              <span className="nav-link user-name">{user.fullName}</span>
+              <button onClick={logout} className="nav-link logout-btn">Logout</button>
+>>>>>>> c3078db (Added Flight Concierge, updated host customization, and fixed layout styles)
             </>
           )}
         </div>
@@ -52,10 +70,17 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="mobile-menu">
-          <Link to="/find-events" className="mobile-link">Find Events</Link>
-          <Link to="/create-event" className="mobile-link">Create Event</Link>
-          <Link to="/tickets" className="mobile-link">Tickets</Link>
-          <Link to="/login" className="mobile-link">Log In</Link>
+          <Link to="/find-events" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Find Events</Link>
+          <Link to="/create-event" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Create Event</Link>
+          <Link to="/vendor/login" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Vendor Portal</Link>
+          {!user ? (
+            <>
+              <Link to="/login" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Log In</Link>
+              <Link to="/signup" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Sign Up</Link>
+            </>
+          ) : (
+            <button onClick={logout} className="mobile-link text-left">Logout</button>
+          )}
         </div>
       )}
 
@@ -149,6 +174,17 @@ export default function Navbar() {
         }
         .nav-link:hover { color: var(--primary-color); }
 
+        .vendor-link {
+          color: var(--primary-color);
+          border: 1px solid rgba(198,167,94,0.3);
+          padding: 0.4rem 0.8rem;
+          border-radius: 6px;
+        }
+        .vendor-link:hover {
+          background: rgba(198,167,94,0.05);
+          border-color: var(--primary-color);
+        }
+
         .btn-signup {
           background: var(--primary-color);
           color: #0A0A0A !important;
@@ -162,10 +198,12 @@ export default function Navbar() {
         }
         .btn-signup:hover {
           background: #D4B76A;
-          color: #0A0A0A !important;
           box-shadow: 0 4px 16px rgba(198,167,94,0.28);
           transform: translateY(-1px);
         }
+
+        .user-name { color: #FFFFFF; font-weight: 600; }
+        .logout-btn { color: #E05C5C !important; }
 
         .category-strip {
           border-top: 1px solid rgba(255,255,255,0.05);
@@ -240,6 +278,7 @@ export default function Navbar() {
           }
           .mobile-link:hover { color: var(--primary-color); }
           .mobile-link:last-child { border-bottom: none; }
+          .text-left { text-align: left; background: none; border: none; font-family: inherit; }
           @keyframes slideDown {
             from { opacity: 0; transform: translateY(-8px); }
             to   { opacity: 1; transform: translateY(0); }
