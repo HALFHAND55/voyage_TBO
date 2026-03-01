@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import { Routes } from "react-router-dom";
-import PublicRoutes from "./PublicRoutes";
-import DashboardRoutes from "./DashboardRoutes";
-import VendorRoutes from "./VendorRoutes";
-
-const AppRoutes = () => {
-  return (
-    <Routes>
-      {PublicRoutes()}
-      {DashboardRoutes()}
-      {VendorRoutes()}
-    </Routes>
-  );
-=======
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Landing from '../pages/Landing';
@@ -28,7 +13,7 @@ import GuestDashboard from '../pages/GuestDashboard';
 import Auth from '../components/Auth';
 import HostQuestionnaire from '../pages/HostQuestionnaire'; 
 import HostCustomize from '../pages/HostCustomize';
-import FlightBooking from '../pages/FlightBooking'; // FIXED IMPORT PATH
+import FlightBooking from '../pages/FlightBooking'; 
 
 const AppRoutes = () => {
     return (
@@ -63,7 +48,6 @@ const AppRoutes = () => {
             <Route path="guest/dashboard" element={<GuestDashboard />} />
         </Routes>
     );
->>>>>>> c3078db (Added Flight Concierge, updated host customization, and fixed layout styles)
 };
 
 export default AppRoutes;

@@ -1,4 +1,4 @@
-import { Search, Menu, X, LogIn, Store } from 'lucide-react';
+import { Search, Menu, X, LogIn, Store, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -21,24 +21,9 @@ export default function Navbar() {
         </div>
 
         <div className="nav-right desktop-only">
-<<<<<<< HEAD
           <button className="nav-link"><MapPin size={16}/>Location</button>
           <Link to="/find-events" className="nav-link">Find Events</Link>
           <Link to="/tickets" className="nav-link">Find My Tickets</Link>
-          {!user ? (
-            <>
-              <Link to="/vendor" className="nav-link">Vendor Portal</Link>
-              <Link to="/login" className="nav-link"><LogIn size={16} /> Log In</Link>
-              <Link to="/signup" className="nav-link btn-signup">Sign Up</Link>
-            </>
-          ) : (
-            <>
-              <span className="nav-link">{user.fullName}</span>
-              <button onClick={logout} className="nav-link">
-                Logout
-              </button>
-=======
-          <Link to="/find-events" className="nav-link">Find Events</Link>
           <Link to="/create-event" className="nav-link">Create Event</Link>
           
           {/* Vendor Portal Link */}
@@ -55,7 +40,6 @@ export default function Navbar() {
             <>
               <span className="nav-link user-name">{user.fullName}</span>
               <button onClick={logout} className="nav-link logout-btn">Logout</button>
->>>>>>> c3078db (Added Flight Concierge, updated host customization, and fixed layout styles)
             </>
           )}
         </div>
@@ -72,6 +56,7 @@ export default function Navbar() {
         <div className="mobile-menu">
           <Link to="/find-events" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Find Events</Link>
           <Link to="/create-event" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Create Event</Link>
+          <Link to="/tickets" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Find My Tickets</Link>
           <Link to="/vendor/login" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Vendor Portal</Link>
           {!user ? (
             <>
